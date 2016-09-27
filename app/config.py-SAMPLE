@@ -1,0 +1,14 @@
+SECRET_KEY = 'you should really change me omg'
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/debug.db'
+
+# flask-mail settings for flask-user
+# (email confirmation, password reset)
+MAIL_USERNAME = 'example@gmail.com'
+MAIL_PASSWORD = 'your password'
+MAIL_DEFAULT_SENDER = '"name" <example@gmail.com>'
+MAIL_SERVER = 'smtp.gmail.com'
+MAIL_PORT = 465
+MAIL_USE_SSL = True
+MAIL_USE_TLS = False
+# this is used by email:
+USER_APP_NAME = 'urlink'

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<form method="POST" action="/urls/add">
+  <div class="form-group">
+    {{ form.url.label }}
+    {{ form.url(class="form-control input-lg", autofocus=True) }}
+    {% if form.url.errors %}
+      <ul class=errors>
+      {% for error in form.url.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="form-group">
+    {{ form.description.label }}
+    {{ form.description(class="form-control input-lg", maxlength="140") }}
+    {% if form.url.errors %}
+      <ul class=errors>
+      {% for error in form.description.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+  <button type="submit" class="btn btn-default btn-large btn-primary">Submit</button>
+</form>
+
+{% endblock %}
