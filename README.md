@@ -19,5 +19,7 @@ finished the live bookmark filtering, so I wanna at least start the repo.
 ```
 $ pip install -r requirements.txt
 $ cd app
+$ cp config.py-SAMPLE config.py
+$ vim config.py
 $ python app.py
 ```
