@@ -73,6 +73,7 @@ def home_page():
 
     # only logged-in users have URLs to see and search!
     if flask_login.current_user.is_authenticated:
+        # this form doesn't need validating
         search_form = SearchForm(flask.request.form)
         urls = models.Url.query.filter_by(
             user=flask_login.current_user
@@ -143,11 +144,13 @@ def add_url():
 
     """
 
+    form = AddUrlForm(flask.request.form)
+
     # Either process the form from POST or show the form.
     if flask.request.method == 'POST':
 
-        # TODO: this should be handled by WTForms...
-        if len(flask.request.form['description']) > 140:
+        if not form.validate():
+            # TODO: message
             flask.abort(400)
 
         # There's no reason to prevent the URL from being created
@@ -161,7 +164,6 @@ def add_url():
         models.db.session.commit()
         return flask.redirect(flask.url_for('view_url', url_id=new_url.id))
     else:
-        form = AddUrlForm(flask.request.form)
         return flask.render_template("add_url.html", form=form)
 
 
