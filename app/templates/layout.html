@@ -45,8 +45,14 @@
             </div>
           </li>
         {% else %}
-          <a class="nav-link" href="{{ url_for('user.login') }}">Login</a>
-          <a href="{{ url_for('user.register') }}">Register</a>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('user.login') }}">Login</a>
+          </li>
+          <li>
+            <div class="btn-nav">
+              <a href="{{ url_for('user.register') }}" class="btn btn-primary btn-small navbar-btn">Register</a>
+            </div>
+          </li>
         {% endif %}
       </ul>
     </div>
