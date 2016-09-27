@@ -60,6 +60,14 @@ class Url(db.Model):
         return '<URL #%s (%s)>' % (self.id, self.url)
 
     def to_dict(self):
+        """Create a dictionary representing this URL.
+
+        Returns:
+            dict: contains the id, url, and description of
+                this URL.
+
+        """
+
         data_to_return = {
             'id': self.id,
             # TODO:
