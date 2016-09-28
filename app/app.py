@@ -4,9 +4,6 @@
 
 # TODO: limiting
 
-# builtin
-import os
-
 # local
 import models
 
@@ -20,8 +17,7 @@ import wtforms
 
 # flask app setup
 app = flask.Flask(__name__)
-config_path = os.path.dirname(os.path.abspath(__file__))
-app.config.from_pyfile(os.path.join(config_path, "config.py"))
+app.config.from_object("config")
 models.db.init_app(app)
 # flask user
 mail = flask_mail.Mail(app)
