@@ -20,7 +20,7 @@ finished the live bookmark filtering, so I wanna at least start the repo.
 
 ```
 $ pip install -r requirements.txt
-$ cp app/config.py-SAMPLE app/config.py
-$ vim app/config.py
-$ gunicorn app:app --chdir=app
+$ cp config.py-SAMPLE config.py
+$ vim config.py
+$ gunicorn app:app
 ```
