@@ -1,4 +1,3 @@
 *.pyc
-config.py
+settings.cfg
 __pycache__
-config.py
