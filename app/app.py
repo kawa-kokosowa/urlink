@@ -6,6 +6,7 @@
 
 # local
 import models
+import config
 
 # 3rd party/pip
 import flask
@@ -17,7 +18,7 @@ import wtforms
 
 # flask app setup
 app = flask.Flask(__name__)
-app.config.from_object("config")
+app.config.from_object(config)
 models.db.init_app(app)
 # flask user
 mail = flask_mail.Mail(app)
@@ -168,10 +169,8 @@ def add_url():
         return flask.render_template("add_url.html", form=form)
 
 
-# Start development web server
+# Create the database
 if __name__=='__main__':
 
     with app.app_context():
         models.db.create_all()
-
-    app.run(host='0.0.0.0', port=5000, debug=True)
