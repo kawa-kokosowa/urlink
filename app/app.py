@@ -38,12 +38,22 @@ class AddUrlForm(wtforms.Form):
     url = wtforms.StringField(
         'url',
         [wtforms.validators.URL(require_tld=True),],
-        render_kw={"placeholder": "URL/Link", "class": "form-control"},
+        render_kw={
+            "placeholder": "URL/Link",
+            "class": "form-control input-lg",
+            "id": "url",
+            "autofocus": True
+        },
     )
-    description = wtforms.StringField(
+    description = wtforms.TextAreaField(
         'description',
         [wtforms.validators.Length(max=140),],
-        render_kw={"placeholder": "Description/about URL"},
+        render_kw={
+            "placeholder": "Description/about URL",
+            "class": "form-control input-lg",
+            "id": "description",
+            "maxlength": 140,
+        },
     )
 
 
@@ -147,12 +157,7 @@ def add_url():
     form = AddUrlForm(flask.request.form)
 
     # Either process the form from POST or show the form.
-    if flask.request.method == 'POST':
-
-        if not form.validate():
-            # TODO: message
-            flask.abort(400)
-
+    if flask.request.method == 'POST' and form.validate():
         # There's no reason to prevent the URL from being created
         # using the POST'd information. Create and show the URL.
         new_url = models.Url(

@@ -3,15 +3,13 @@
 
 {% if current_user.is_authenticated %}
     {% if urls %}
-        <h2>Your URLs</h2>
-        <p>Ordered newest first.</p>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
           <form method="get" class="margin-bottom" action="/autocomplete">
             <div class="input-group">
-              <input id="search" autofocus class="form-control input-lg" type="text" name="term">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-          </div>
+              <input id="search" autofocus placeholder="search your links" class="form-control input-lg" type="text" name="term">
+              <span class="input-group-btn input-group-lg">
+                <button class="btn btn-default btn-lg" type="button"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
           </form>
 
         <ul id="url-list" class="list-group">
@@ -44,7 +42,7 @@
                 newItem.append("<a class='badge' href='/urls/" + item.id + "'>ID: " + item.id + "</a>");
 
                 // the heading, which is also the actual URL/link
-                newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
+                newItem.append("<h3 class='h4 list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
 
                 // add description
                 newItem.append("<p>" + item.description + "</p>");

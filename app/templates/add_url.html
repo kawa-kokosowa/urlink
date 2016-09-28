@@ -1,31 +1,51 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<form method="POST" action="/urls/add">
-  <div class="form-group">
-    {{ form.url.label }}
-    {{ form.url(class="form-control input-lg", autofocus=True) }}
-    {% if form.url.errors %}
-      <ul class=errors>
-      {% for error in form.url.errors %}
-        <li>{{ error }}</li>
-      {% endfor %}
-      </ul>
-    {% endif %}
-  </div>
 
-  <div class="form-group">
-    {{ form.description.label }}
-    {{ form.description(class="form-control input-lg", maxlength="140") }}
+<form method="POST" action="/urls/add">
+
+  <!-- URL field -->
     {% if form.url.errors %}
-      <ul class=errors>
-      {% for error in form.description.errors %}
-        <li>{{ error }}</li>
-      {% endfor %}
-      </ul>
+        <div class="form-group has-error has-feedback">
+            {{ form.url.label(class="control-label") }}
+            {{ form.url(**{"aria-describedby": "url_error"}) }}
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+            <span id="url_error">{% for error in form.url.errors %}{{ error }}{% endfor %}</span>
+        </div>
+    {% else %}
+        <div class="form-group">
+            {{ form.url.label(class="control-label") }}
+            {{ form.url }}
+        </div>
     {% endif %}
-  </div>
-  <button type="submit" class="btn btn-default btn-large btn-primary">Submit</button>
+
+  <!-- URL description -->
+    {% if form.description.errors %}
+        <div class="form-group has-error has-feedback">
+            {{ form.description.label(class="control-label") }}
+            {{ form.description(**{"aria-describedby": "description_error"}) }}
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+            <span id="url_error" class="pull-left">{% for error in form.description.errors %}{{ error }}{% endfor %}</span>
+    {% else %}
+        <div class="form-group">
+            {{ form.description.label(class="control-label") }}
+            {{ form.description }}
+    {% endif %}
+            <small id="count_message" class="pull-right">140 character limit</small>
+            <script>
+                var text_max = 140;
+                $('#count_message').html(text_max + ' remaining');
+
+                $('#description').keyup(function() {
+                  var text_length = $('#description').val().length;
+                  var text_remaining = text_max - text_length;
+                  
+                  $('#count_message').html(text_remaining + ' remaining');
+                });
+            </script>
+        </div>
+  <div class="clearfix"></div>
+  <button type="submit" class="btn btn-default btn-large btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add URL</button>
 </form>
 
 {% endblock %}
