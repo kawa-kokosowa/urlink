@@ -6,7 +6,6 @@
 
 # local
 import models
-import config
 
 # 3rd party/pip
 import flask
@@ -18,7 +17,7 @@ import wtforms
 
 # flask app setup
 app = flask.Flask(__name__)
-app.config.from_object(config)
+app.config.from_object(os.environ['APP_SETTINGS'])
 models.db.init_app(app)
 # flask user
 mail = flask_mail.Mail(app)
