@@ -20,8 +20,23 @@ finished the live bookmark filtering, so I wanna at least start the repo.
 
 ```
 $ pip install -r requirements.txt
-$ cp settings.cfg-SAMPLE settings.cfg
-$ vim settings.cfg
-$ export URLINK_SETTINGS=/path/to/settings.cfg
+$ export URLINK_SETTINGS=/path/to/settings-default.cfg
 $ gunicorn app:app
 ```
+
+## Heroku
+
+### Environmental Variables
+
+Be sure to override the `SECRET_KEY`, you also may want to change the
+`SQLALCHEMY_DATABASE_URI`. The rest of the environmental variables you
+should be concerned with are the variables for mailer/sender, which is
+setup, by default, for Gmail:
+
+  * `MAIL_USERNAME`
+  * `MAIL_PASSWORD`
+  * `MAIL_DEFAULT_SENDER`
+  * `MAIL_SERVER`
+  * `MAIL_PORT`
+  * `MAIL_USE_SSL` = True
+  * `MAIL_USE_TLS` = False
