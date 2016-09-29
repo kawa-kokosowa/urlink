@@ -14,7 +14,7 @@ TESTING = False
 SECRET_KEY = os.getenv('SECRET_KEY')
 SQLALCHEMY_DATABASE_URI = os.getenv(
     'SQLALCHEMY_DATABASE_URI',
-    'sqlite:////tmp/debug.db'
+    os.getenv('DATABASE_URL', 'sqlite:////tmp/debug.db'),  # heroku
 )
 
 # flask-mail settings for flask-user
