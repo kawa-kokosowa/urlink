@@ -1,6 +1,4 @@
-# Python configuration file
-
-DEBUG = True
+DEBUG = False
 TESTING = False
 
 SECRET_KEY = 'you should really change me omg'
@@ -9,7 +7,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/debug.db'
 # flask-mail settings for flask-user
 # (email confirmation, password reset)
 MAIL_USERNAME = 'example@gmail.com'
-MAIL_PASSWORD = 'your gmail password'
+MAIL_PASSWORD = 'some password'
 MAIL_DEFAULT_SENDER = '"urlink" <noreply@urlink.link>'
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465

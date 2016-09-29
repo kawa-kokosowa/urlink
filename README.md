@@ -20,7 +20,7 @@ finished the live bookmark filtering, so I wanna at least start the repo.
 
 ```
 $ pip install -r requirements.txt
-$ export URLINK_SETTINGS=/path/to/settings-default.cfg
+$ export URLINK_SETTINGS=/path/to/config-overrides.cfg
 $ gunicorn app:app
 ```
 

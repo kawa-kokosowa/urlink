@@ -7,6 +7,7 @@ import os
 
 # local
 import models
+import config_defaults
 
 # 3rd party/pip
 import flask
@@ -19,6 +20,7 @@ import wtforms
 # flask app setup
 app = flask.Flask(__name__)
 #app.config.from_object(os.environ['URLINK_SETTINGS'])
+app.config.from_object(config_defaults)
 app.config.from_envvar('URLINK_SETTINGS')
 models.db.init_app(app)
 # flask user
