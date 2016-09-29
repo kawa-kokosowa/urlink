@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+
+  "name": "add to urlink",
+  "description": "Add active tab to ur links.",
+  "version": "0.1",
+
+  "browser_action": {
+   "default_popup": "popup.html"
+  },
+  "permissions": [
+   "activeTab"
+   ]
+}

@@ -70,31 +70,33 @@ class SearchForm(wtforms.Form):
 
 @app.route('/')
 def home_page():
-    """Rendered Jinja/HTML page for searching/filtering bookmarks.
-
-    Form on this page can use regular form submission, but
-    this page also includes jQuery used to live-search
-    with JSON, i.e., `/autocomplete` endpoint.
-
-    See Also:
-        autocomplete()
+    """Simple home/about page.
 
     """
 
+    return flask.render_template("home.html")
 
-    # only logged-in users have URLs to see and search!
-    if flask_login.current_user.is_authenticated:
-        # this form doesn't need validating
-        search_form = SearchForm(flask.request.form)
-        urls = models.Url.query.filter_by(
-            user=flask_login.current_user
-        ).all()
-    else:
-        urls = None
-        search_form = None
+
+@app.route('/urls')
+@flask_user.login_required
+def ur_links():
+    """Rendered Jinja/HTML page for live-searching bookmarks.
+
+    Form on this page can use normal form submission, however,
+    this page includes jQuery which implements the live-searching
+    feature, it updates the page with values from `/autocomplete`,
+    i.e., autocomplete().
+
+    """
+
+    # this form doesn't need validating
+    search_form = SearchForm(flask.request.form)
+    urls = models.Url.query.filter_by(
+        user=flask_login.current_user
+    ).all()
 
     return flask.render_template(
-        "home.html",
+        "ur_links.html",
         search_form=search_form,
         urls=urls
     )

@@ -5,6 +5,8 @@ and elegant frontend.
 
 [See urlink in action!](http://urlink.link)
 
+I've also included a Chrome Extension for urlink (`/chrome_extension`).
+
 ## The tools
 
   * `flask`, `flask_user`, `flask_login`, `flask_sqlalchemy`
