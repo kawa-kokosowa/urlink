@@ -2,3 +2,4 @@ flask
 flask_sqlalchemy
 flask_user
 gunicorn
+psycopg2
