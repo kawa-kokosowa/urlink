@@ -18,9 +18,20 @@ finished the live bookmark filtering, so I wanna at least start the repo.
 
 ## Quickstart
 
+Create `~/.urlink` or the like, it should look like:
+
 ```
+#!/bin/sh
+export MAIL_USERNAME="example@gmail.com"
+export MAIL_PASSWORD="lololol"
+export SECRET_KEY="wwowowowowowowoeijfeoaijf"
+```
+
+Finally, setup and run local development server:
+
+```
+$ . ~/.urlink
 $ pip install -r requirements.txt
-$ export URLINK_SETTINGS=/path/to/config-overrides.cfg
 $ gunicorn app:app
 ```
 
@@ -28,15 +39,12 @@ $ gunicorn app:app
 
 ### Environmental Variables
 
-Be sure to override the `SECRET_KEY`, you also may want to change the
-`SQLALCHEMY_DATABASE_URI`. The rest of the environmental variables you
-should be concerned with are the variables for mailer/sender, which is
-setup, by default, for Gmail:
-
-  * `MAIL_USERNAME`
-  * `MAIL_PASSWORD`
-  * `MAIL_DEFAULT_SENDER`
-  * `MAIL_SERVER`
-  * `MAIL_PORT`
-  * `MAIL_USE_SSL` = True
-  * `MAIL_USE_TLS` = False
+  * `SECRET_KEY` (you must override)
+  * `SQLALCHEMY_DATABASE_URI` (optional; defaults to sqlite)
+  * `MAIL_USERNAME` (you always need to set this!)
+  * `MAIL_PASSWORD` (you always need to set this!)
+  * `MAIL_DEFAULT_SENDER` (don't set if you're using gmail)
+  * `MAIL_SERVER` (don't set if you're using gmail)
+  * `MAIL_PORT` (don't set if you're using gmail)
+  * `MAIL_USE_SSL` (don't set if you're using gmail)
+  * `MAIL_USE_TLS` (don't set if you're using gmail)
