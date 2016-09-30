@@ -3,9 +3,11 @@
 Simple-as-possible non-social bookmark service, including live search
 and elegant frontend.
 
-[See urlink in action!](http://urlink.link)
+[Use urlink LIVE on urlink.link!](http://urlink.link)
 
 I've also included a Chrome Extension for urlink (`/chrome_extension`).
+
+![urlink screen recording](https://github.com/lily-seabreeze/urlink/blob/master/demo.gif)
 
 ## The tools
 
