@@ -170,7 +170,7 @@ def add_url():
         )
         models.db.session.add(new_url)
         models.db.session.commit()
-        return flask.redirect(flask.url_for('home_page'))
+        return flask.redirect(flask.url_for('ur_links'))
     else:
         return flask.render_template("add_url.html", form=form)
 
