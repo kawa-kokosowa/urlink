@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h2>{{ current_user.username }}</h2>
+    <ul>
+      <li><a href="{{ url_for('user.change_username') }}">Change username</a></li>
+      <li><a href="{{ url_for('user.change_password') }}">Change password</a></li>
+    </ul>
+{% endblock %}

@@ -34,6 +34,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('ur_links') }}" title="Ur links!"><span class="glyphicon glyphicon-link"></span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('user.profile') }}" title="Account"><span class="glyphicon glyphicon-user"></span></a>
+        </li>
         {% endif %}
       </ul>
 
@@ -64,7 +67,6 @@
 
 
 <main class="container-fluid">
-
 {# One-time system messages called Flash messages #}
 {% block flash_messages %}
     {%- with messages = get_flashed_messages(with_categories=true) -%}
