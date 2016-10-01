@@ -2,3 +2,11 @@
  *
  * urlink site-specific styles
  */
+
+#navbar-toggle-cbox {
+  display: none;
+}
+
+#navbar-toggle-cbox:checked + #navbar-collapse {
+  display: block;
+}
