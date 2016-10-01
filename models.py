@@ -9,7 +9,6 @@ import flask_user
 db = flask_sqlalchemy.SQLAlchemy()
 
 
-# TODO: replace username with only email
 class User(db.Model, flask_user.UserMixin):
     """Generic User data model for flask_user as seen
     in their documentation.
@@ -21,7 +20,6 @@ class User(db.Model, flask_user.UserMixin):
     id = db.Column(db.Integer, primary_key=True)
 
     # User authentication information
-    username = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False, server_default='')
     reset_password_token = db.Column(db.String(100), nullable=False, server_default='')
 

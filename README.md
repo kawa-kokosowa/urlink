@@ -32,11 +32,11 @@ Install either `requirements_no_postgres.txt` or `requirements.txt`,
 depending on if you want `psycopg2` (I use sqlite locally, but
 PostgreSQL on Heroku).
 
+Setup the database simply by `python app.py`.
+
 Finally run the server with `gunicorn app:app:`.
 
-## Heroku
-
-### Environmental Variables
+## Environmental Variables
 
   * `SECRET_KEY` (you must override)
   * `SQLALCHEMY_DATABASE_URI` (optional; defaults to sqlite)
