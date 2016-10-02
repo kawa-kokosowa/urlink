@@ -3,10 +3,26 @@
  * urlink site-specific styles
  */
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: calc(-@line-height-base * 2);
+}
+
 #navbar-toggle-cbox {
   display: none;
 }
 
 #navbar-toggle-cbox:checked + #navbar-collapse {
   display: block;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  padding-top: @line-height-base;
+  height: calc(-@line-height-base * 2);
 }

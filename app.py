@@ -72,18 +72,9 @@ class SearchForm(wtforms.Form):
     autocomp = wtforms.TextField('autocomp', id='autocomplete')
 
 
+# TODO: newest first.
 @app.route('/')
 def home_page():
-    """Simple home/about page.
-
-    """
-
-    return flask.render_template("home.html")
-
-
-@app.route('/urls')
-@flask_user.login_required
-def ur_links():
     """Rendered Jinja/HTML page for live-searching bookmarks.
 
     Form on this page can use normal form submission, however,
@@ -91,42 +82,23 @@ def ur_links():
     feature, it updates the page with values from `/autocomplete`,
     i.e., autocomplete().
 
-    """
-
-    # this form doesn't need validating
-    search_form = SearchForm(flask.request.form)
-    urls = models.Url.query.filter_by(
-        user=flask_login.current_user
-    ).all()
-
-    return flask.render_template(
-        "ur_links.html",
-        search_form=search_form,
-        urls=urls
-    )
-
-
-@app.route('/urls/<int:url_id>')
-@flask_user.login_required
-def view_url(url_id):
-    """A unique address to view a URL post the
-    current user owns.
-
-    If the current user's ID matches the user ID (the owner)
-    of the URL being requested by `url_id`, said link is
-    presented/rendered, otherwise, a 403 Forbidden is returned.
+    If the user isn't logged in, they are redirected to the about page.
 
     """
 
-    url = models.Url.query.get(url_id)
-
-    if url.user_id == flask_login.current_user.id:
+    if flask_login.current_user.is_authenticated:
+        # this form doesn't need validating
+        search_form = SearchForm(flask.request.form)
+        urls = models.Url.query.filter_by(
+            user=flask_login.current_user
+        ).all()
         return flask.render_template(
-            "view_url.html",
-            url=url
+            "ur_links.html",
+            search_form=search_form,
+            urls=urls
         )
     else:
-        flask.abort(403)
+        return flask.render_template("landing.html")
 
 
 @app.route('/autocomplete', methods=['GET'])
@@ -174,7 +146,7 @@ def add_url():
         )
         models.db.session.add(new_url)
         models.db.session.commit()
-        return flask.redirect(flask.url_for('ur_links'))
+        return flask.redirect(flask.url_for('home_page'))
     else:
         return flask.render_template("add_url.html", form=form)
 
