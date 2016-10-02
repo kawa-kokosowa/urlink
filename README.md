@@ -9,22 +9,17 @@ I've also included a Chrome Extension for urlink (`/chrome_extension`).
 
 ![urlink screen recording](https://github.com/lily-seabreeze/urlink/blob/master/demo.gif)
 
+This is an early work in progress (call it "alpha").
+
 ## The tools
 
   * `flask`, `flask_user`, `flask_login`, `flask_sqlalchemy`
   * Bootstrap
   * jQuery
 
-Optionally: Heroku.
-
-## Work in progress
-
-Please forgive me; this is super sloppy and undocumented, but I just
-finished the live bookmark filtering, so I wanna at least start the repo.
-
 ## Quickstart
 
-Create `~/.urlink` or the like, it should look like:
+Create `~/.urlink` and run `. ~/.urlink`, its contents should look like:
 
 ```
 #!/bin/sh
@@ -33,13 +28,11 @@ export MAIL_PASSWORD="lololol"
 export SECRET_KEY="wwowowowowowowoeijfeoaijf"
 ```
 
-Finally, setup and run local development server:
+Install either `requirements_no_postgres.txt` or `requirements.txt`,
+depending on if you want `psycopg2` (I use sqlite locally, but
+PostgreSQL on Heroku).
 
-```
-$ . ~/.urlink
-$ pip install -r requirements.txt
-$ gunicorn app:app
-```
+Finally run the server with `gunicorn app:app:`.
 
 ## Heroku
 

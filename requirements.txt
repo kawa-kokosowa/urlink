@@ -1,5 +1,2 @@
-flask
-flask_sqlalchemy
-flask_user
-gunicorn
+-r requirements_no_postgres.txt
 psycopg2
