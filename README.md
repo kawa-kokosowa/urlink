@@ -38,9 +38,7 @@ Create the database with `python app.py db init` (`db migrate`,
 
 Finally run the server with `gunicorn app:app:`.
 
-## Heroku
-
-### Environmental Variables
+## Environmental Variables
 
   * `SECRET_KEY` (you must override)
   * `SQLALCHEMY_DATABASE_URI` (optional; defaults to sqlite)

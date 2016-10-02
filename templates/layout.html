@@ -14,14 +14,15 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="navbar-collapse">
+      <label for="navbar-toggle-cbox" class="navbar-toggle collapsed" data-toggle="collapse" data-target="navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-      </button>
+      </label>
       <a class="navbar-brand" href="{{ url_for('home_page') }}">urlink</a>
     </div>
+    <input type="checkbox" id="navbar-toggle-cbox">
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="navbar-collapse collapse" id="navbar-collapse">
@@ -32,6 +33,9 @@
         {% if current_user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('ur_links') }}" title="Ur links!"><span class="glyphicon glyphicon-link"></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('user.profile') }}" title="Account"><span class="glyphicon glyphicon-user"></span></a>
         </li>
         {% endif %}
       </ul>
@@ -63,6 +67,20 @@
 
 
 <main class="container-fluid">
+{# One-time system messages called Flash messages #}
+{% block flash_messages %}
+    {%- with messages = get_flashed_messages(with_categories=true) -%}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category=='error' %}
+                    {% set category='danger' %}
+                {% endif %}
+                <div class="alert alert-{{category}}">{{ message|safe }}</div>
+            {% endfor %}
+        {% endif %}
+    {%- endwith %}
+{% endblock %}
+
 {% block body %}{% endblock %}
 </main>
 

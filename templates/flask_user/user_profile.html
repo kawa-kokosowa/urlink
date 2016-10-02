@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h2>{{ current_user.email }}</h2>
+    <ul>
+      <li><a href="{{ url_for('user.change_password') }}">Change password</a></li>
+      <li>&hellip;more to come! Sorry!</li>
+    </ul>
+{% endblock %}

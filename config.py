@@ -17,6 +17,9 @@ SQLALCHEMY_DATABASE_URI = os.getenv(
     os.getenv('DATABASE_URL', 'sqlite:////tmp/debug.db'),  # heroku
 )
 
+# flask-user
+USER_ENABLE_USERNAME = False
+USER_ENABLE_CHANGE_USERNAME = False
 # flask-mail settings for flask-user
 # (email confirmation, password reset)
 # setup for gmail by default
