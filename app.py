@@ -14,16 +14,20 @@ import flask
 import flask_mail
 import flask_user
 import flask_login  # depend of flask_user
+import flask_script
+import flask_migrate
 import wtforms
 
 
 # flask app setup
 app = flask.Flask(__name__)
-# SEE: docstring in config module
-#app.config.from_object(os.environ['URLINK_SETTINGS'])
 app.config.from_object(config)
-#app.config.from_envvar('URLINK_SETTINGS')
-models.db.init_app(app)
+migrate = flask_migrate.Migrate(app, models.db)
+
+manager = flask_migrate.Manager(app)
+manager.add_command('db', flask_migrate.MigrateCommand)
+
+models.db.init_app(app)  # ???
 # flask user
 mail = flask_mail.Mail(app)
 db_adapter = flask_user.SQLAlchemyAdapter(models.db, models.User)
@@ -177,6 +181,4 @@ def add_url():
 
 # Create the database
 if __name__=='__main__':
-
-    with app.app_context():
-        models.db.create_all()
+    manager.run()

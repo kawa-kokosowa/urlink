@@ -13,7 +13,8 @@ This is an early work in progress (call it "alpha").
 
 ## The tools
 
-  * `flask`, `flask_user`, `flask_login`, `flask_sqlalchemy`
+  * `flask`, `flask_user`, `flask_login`, `flask_sqlalchemy`,
+    `flask_migrate`
   * Bootstrap
   * jQuery
 
@@ -31,6 +32,9 @@ export SECRET_KEY="wwowowowowowowoeijfeoaijf"
 Install either `requirements_no_postgres.txt` or `requirements.txt`,
 depending on if you want `psycopg2` (I use sqlite locally, but
 PostgreSQL on Heroku).
+
+Create the database with `python app.py db init` (`db migrate`,
+`db upgrade`, and `db --help` are also available).
 
 Finally run the server with `gunicorn app:app:`.
 
