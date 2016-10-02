@@ -14,8 +14,7 @@
     <ul id="url-list" class="list-group">
     {% for url in urls %}
       <li class="list-group-item">
-        <a class="badge" href="/urls/{{ url.id }}">ID: {{ url.id }}</a>
-        <h3 class="list-group-item-heading">
+        <h3 id="url-{{ url.id }}" class="list-group-item-heading">
           <a href="{{ url.url }}">{{ url.url }}</a>
         </h3>
         <p>{{ url.description }}</p>
