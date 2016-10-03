@@ -20,13 +20,12 @@ This is an early work in progress (call it "alpha").
 
 ## Quickstart
 
-Create `~/.urlink` and run `. ~/.urlink`, its contents should look like:
+[Set the required environmental variables](http://askubuntu.com/questions/58814/how-do-i-add-environment-variables):
 
 ```
-#!/bin/sh
-export MAIL_USERNAME="example@gmail.com"
-export MAIL_PASSWORD="lololol"
-export SECRET_KEY="wwowowowowowowoeijfeoaijf"
+MAIL_USERNAME="example@gmail.com"
+MAIL_PASSWORD="lololol"
+SECRET_KEY="wwowowowowowowoeijfeoaijf"
 ```
 
 Install either `requirements_no_postgres.txt` or `requirements.txt`,
