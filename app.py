@@ -8,14 +8,16 @@ import os
 # local
 import models
 import config
+import urlhelper
 
 # 3rd party/pip
 import flask
 import flask_mail
 import flask_user
-import flask_login  # depend of flask_user
+import flask_login
 import flask_script
 import flask_migrate
+import sqlalchemy
 import wtforms
 
 
@@ -116,11 +118,27 @@ def autocomplete():
 
     """
 
-    search = flask.request.args.get('term')
-    search_results = models.Url.query.filter(
-        models.Url.user_id == flask_login.current_user.id,
-        models.Url.description.ilike("%" + search + "%"),
-    )
+    search_term = flask.request.args.get('term')
+    search_type = flask.request.args.get('type')
+
+    if search_type:
+        search_results = models.Url.query.filter(
+            models.Url.user_id == flask_login.current_user.id,
+            sqlalchemy.or_(
+                models.Url.url.ilike("%" + search_term + "%"),
+                models.Url.description.ilike("%" + search_term + "%"),
+            ),
+            models.Url.content_type == search_type,
+        )
+    else:
+        search_results = models.Url.query.filter(
+            models.Url.user_id == flask_login.current_user.id,
+            sqlalchemy.or_(
+                models.Url.url.ilike("%" + search_term + "%"),
+                models.Url.description.ilike("%" + search_term + "%"),
+            ),
+        )
+
     urls = [url.to_dict() for url in search_results]
     return flask.jsonify(urls)
 
@@ -139,10 +157,13 @@ def add_url():
     if flask.request.method == 'POST' and form.validate():
         # There's no reason to prevent the URL from being created
         # using the POST'd information. Create and show the URL.
+        url = flask.request.form['url']
+        searchable_data = urlhelper.fetch_searchable_data(url)
         new_url = models.Url(
             user_id=flask_login.current_user.id,
-            url=flask.request.form['url'],
+            url=url,
             description=flask.request.form['description'],
+            **searchable_data,
         )
         models.db.session.add(new_url)
         models.db.session.commit()

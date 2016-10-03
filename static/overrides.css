@@ -26,3 +26,7 @@ body {
   padding-top: @line-height-base;
   height: calc(-@line-height-base * 2);
 }
+
+#search-type {
+  width: auto !important;
+}

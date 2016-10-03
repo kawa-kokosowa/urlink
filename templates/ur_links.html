@@ -2,28 +2,36 @@
 {% block body %}
 
 {% if urls %}
-      <form method="get" class="margin-bottom" action="/autocomplete">
-        <div class="input-group">
-          <input id="search" autofocus placeholder="search your links" class="form-control input-lg" type="text" name="term">
-          <span class="input-group-btn input-group-lg">
-            <button class="btn btn-default btn-lg" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-          </span>
-        </div>
-      </form>
+<form method="get" class="margin-bottom input-group" action="/autocomplete" id="search-form">
+  <input id="search-term" autofocus placeholder="search your links" class="form-control input-lg" type="text" name="term">
+  <span class="input-group-btn">
+    <select name="type" id="search-type" class="selectpicker form-control input-lg">
+      <option value="">Any Type</option>
+      <option value="application/pdf">application/pdf</option>
+      <option value="text/html">text/html</option>
+    </select>
+  </span>
+  <span class="input-group-btn">
+    <button type="submit" class="btn btn-lg"><span class="glyphicon glyphicon-search"></span> Search</button>
+  </span>
+</form>
 
     <ul id="url-list" class="list-group">
     {% for url in urls %}
-      <li class="list-group-item">
+      <li class="list-group-item {% if url.content_type %}{{ url.content_type|replace('/', '-')}}{% endif %}">
         <h3 id="url-{{ url.id }}" class="list-group-item-heading">
-          <a href="{{ url.url }}">{{ url.url }}</a>
+          <a href="{{ url.url }}">{% if url.title %}{{ url.title }}{% else %}{{ url.url }}{% endif %}</a>
         </h3>
+        {% if url.title %}<p><small>{{ url.url }}</small></p>{% endif %}
+        {% if url.content_type %}<p><small>{{ url.content_type }}</small></p>{% endif %}
         <p>{{ url.description }}</p>
       </li>
     {% endfor %}
     </ul>
     <script>
-      $("#search").keyup(function(){
-        var suggestUri = '/autocomplete?term=' + encodeURIComponent($("#search").val());
+        // what about filter by type after click???
+      function autocomplete_results() {
+        var suggestUri = '/autocomplete?term=' + encodeURIComponent($("#search-term").val()) + '&type=' + encodeURIComponent($("#search-type").val());
 
         $.getJSON(suggestUri, function (json) {
           // first empty the url list
@@ -37,7 +45,17 @@
             var newItem = $(document.createElement('li')).addClass("list-group-item");
 
             // the heading, which is also the actual URL/link
-            newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
+            if (item.title) {
+                newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.title + "</a></h3>");
+                newItem.append("<p><small>" + item.url + "</small></p>");
+            } else {
+                newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
+            }
+
+            // add content_type
+            if (item.content_type) {
+                newItem.append("<p><small>" + item.content_type + "</small></p>");
+            }
 
             // add description
             newItem.append("<p>" + item.description + "</p>");
@@ -45,9 +63,10 @@
             // ... finally add it to the url list
             $("#url-list").append(newItem);
           });
-        });
-
-      });
+        }); // getJSON
+      }
+      $("#search-type").change(autocomplete_results);
+      $("#search-term").keyup(autocomplete_results);
     </script>
 {% else %}
     <h2>No URLs!</h2>

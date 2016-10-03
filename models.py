@@ -43,19 +43,24 @@ class Url(db.Model):
 
     __tablename__ = 'urls'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))  # should never be null :o
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    url = db.Column(db.String())
+    url = db.Column(db.String())  # should neve rbe null :o
     description = db.Column(db.String(140))
+    title = db.Column(db.String())
+    content_type = db.Column(db.String())  # isn't this a certain number of bytes max? should b required
     user = db.relationship('User', foreign_keys='Url.user_id', lazy='subquery')
 
-    def __init__(self, user_id, url, description):
+    def __init__(self, user_id, url, description, content_type=None, title=None):
         self.user_id = user_id
         self.url = url
         self.description = description
+        # these are derived from util.fetch_searchable_data()
+        self.title = title
+        self.content_type = content_type
 
     def __repr__(self):
-        return '<URL #%s (%s)>' % (self.id, self.url)
+        return '<URL #%s %s (%s)>' % (self.id, self.title, self.url)
 
     def to_dict(self):
         """Create a dictionary representing this URL.
@@ -72,5 +77,7 @@ class Url(db.Model):
             # 'created': self.created,
             'url': self.url,
             'description': self.description,
+            'title': self.title,
+            'content_type': self.content_type,
         }
         return data_to_return
