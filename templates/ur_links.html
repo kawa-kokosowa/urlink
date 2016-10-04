@@ -46,7 +46,7 @@
           $(json).each(function(index, item) {
             // first we create an item, so we can later add its contents,
             // finally appending to the list.
-            var newAnchor = $(document.createElement('a')).addClass("list-group-item list-group-item-action");
+            var newAnchor = $(document.createElement('a')).addClass("list-group-item list-group-item-action").attr('href', item.url);
 
             // add content_type
             if (item.content_type) {
