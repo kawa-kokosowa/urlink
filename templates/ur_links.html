@@ -17,17 +17,21 @@
   </span>
 </form>
 
-    <ul id="url-list" class="list-group">
-    {% for url in urls %}
-      <li class="list-group-item {% if url.content_type %}{{ url.content_type|replace('/', '-')}}{% endif %}">
+    <div id="url-list" class="list-group">
+    {% for url in urls %}<a href="{{ url.url }}">
+      <a href="{{ url.url }}" class="list-group-item list-group-item-action {% if url.content_type %}{{ url.content_type|replace('/', '-')}}{% endif %}">
         {% if url.content_type %}<span class="badge">{{ url.content_type }}</span>{% endif %}
         <h3 id="url-{{ url.id }}" class="list-group-item-heading h4">
-          <a href="{{ url.url }}">{% if url.title %}{{ url.title }} <small>({{ url.url }})</small>{% else %}{{ url.url }}{% endif %}</a>
+          {% if url.title %}
+            {{ url.title }} <small>({{ url.url }})</small>
+          {% else %}
+            {{ url.url }}
+          {% endif %}
         </h3>
-        <p>{{ url.description }}</p>
-      </li>
+        <p class="list-group-item-text">{{ url.description }}</p>
+      </a>
     {% endfor %}
-    </ul>
+    </div>
     <script>
         // what about filter by type after click???
       function autocomplete_results() {
@@ -42,25 +46,25 @@
           $(json).each(function(index, item) {
             // first we create an item, so we can later add its contents,
             // finally appending to the list.
-            var newItem = $(document.createElement('li')).addClass("list-group-item");
+            var newAnchor = $(document.createElement('a')).addClass("list-group-item list-group-item-action");
 
             // add content_type
             if (item.content_type) {
-                newItem.append("<span class='badge'>" + item.content_type + "</span>");
+                newAnchor.append("<span class='badge'>" + item.content_type + "</span>");
             }
 
             // the heading, which is also the actual URL/link
             if (item.title) {
-                newItem.append("<h3 class='list-group-item-heading h4'><a href='" + item.url + "'>" + item.title + " <small>(" + item.url + ")</small></a></h3>");
+                newAnchor.append("<h3 class='list-group-item-heading h4'>" + item.title + " <small>(" + item.url + ")</small></h3>");
             } else {
-                newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
+                newAnchor.append("<h3 class='list-group-item-heading h4'>" + item.url + "</h3>");
             }
 
             // add description
-            newItem.append("<p>" + item.description + "</p>");
+            newAnchor.append("<p class='list-group-item-text'>" + item.description + "</p>");
 
             // ... finally add it to the url list
-            $("#url-list").append(newItem);
+            $("#url-list").append(newAnchor);
           });
         }); // getJSON
       }
@@ -70,7 +74,7 @@
       }
       $("#search-type").change(autocomplete_results);
       $("#search-term").keyup(autocomplete_results);
-      $("#url-list").on('click', ".badge", badgeClickHandler);
+      // $("#url-list").on('click', ".badge", badgeClickHandler);
     </script>
 {% else %}
     <h2>No URLs!</h2>

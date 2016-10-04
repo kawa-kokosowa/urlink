@@ -30,3 +30,13 @@ body {
 #search-type {
   width: auto !important;
 }
+
+#urllist * {
+  position: relative;
+  z-index: 0;
+}
+
+#urllist .badge {
+  position: relative;
+  z-index: 999;
+}
