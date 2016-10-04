@@ -22,9 +22,8 @@
       <li class="list-group-item {% if url.content_type %}{{ url.content_type|replace('/', '-')}}{% endif %}">
         {% if url.content_type %}<span class="badge">{{ url.content_type }}</span>{% endif %}
         <h3 id="url-{{ url.id }}" class="list-group-item-heading h4">
-          <a href="{{ url.url }}">{% if url.title %}{{ url.title }}{% else %}{{ url.url }}{% endif %}</a>
+          <a href="{{ url.url }}">{% if url.title %}{{ url.title }} <small>({{ url.url }})</small>{% else %}{{ url.url }}{% endif %}</a>
         </h3>
-        {% if url.title %}<p><small>{{ url.url }}</small></p>{% endif %}
         <p>{{ url.description }}</p>
       </li>
     {% endfor %}
@@ -45,17 +44,16 @@
             // finally appending to the list.
             var newItem = $(document.createElement('li')).addClass("list-group-item");
 
-            // the heading, which is also the actual URL/link
-            if (item.title) {
-                newItem.append("<h3 class='list-group-item-heading h4'><a href='" + item.url + "'>" + item.title + "</a></h3>");
-                newItem.append("<p><small>" + item.url + "</small></p>");
-            } else {
-                newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
-            }
-
             // add content_type
             if (item.content_type) {
                 newItem.append("<span class='badge'>" + item.content_type + "</span>");
+            }
+
+            // the heading, which is also the actual URL/link
+            if (item.title) {
+                newItem.append("<h3 class='list-group-item-heading h4'><a href='" + item.url + "'>" + item.title + " <small>(" + item.url + ")</small></a></h3>");
+            } else {
+                newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
             }
 
             // add description
@@ -66,8 +64,14 @@
           });
         }); // getJSON
       }
+      function badgeClickHandler() {
+        $("#search-type").val($(this).text());
+        console.log($(this).text());
+        autocomplete_results();
+      }
       $("#search-type").change(autocomplete_results);
       $("#search-term").keyup(autocomplete_results);
+      $("#url-list").on('click', ".badge", badgeClickHandler);
     </script>
 {% else %}
     <h2>No URLs!</h2>
