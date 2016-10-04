@@ -7,8 +7,9 @@
   <span class="input-group-btn">
     <select name="type" id="search-type" class="selectpicker form-control input-lg">
       <option value="">Any Type</option>
-      <option value="application/pdf">application/pdf</option>
-      <option value="text/html">text/html</option>
+      {% for option in options %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
     </select>
   </span>
   <span class="input-group-btn">
@@ -19,11 +20,11 @@
     <ul id="url-list" class="list-group">
     {% for url in urls %}
       <li class="list-group-item {% if url.content_type %}{{ url.content_type|replace('/', '-')}}{% endif %}">
-        <h3 id="url-{{ url.id }}" class="list-group-item-heading">
+        {% if url.content_type %}<span class="badge">{{ url.content_type }}</span>{% endif %}
+        <h3 id="url-{{ url.id }}" class="list-group-item-heading h4">
           <a href="{{ url.url }}">{% if url.title %}{{ url.title }}{% else %}{{ url.url }}{% endif %}</a>
         </h3>
         {% if url.title %}<p><small>{{ url.url }}</small></p>{% endif %}
-        {% if url.content_type %}<p><small>{{ url.content_type }}</small></p>{% endif %}
         <p>{{ url.description }}</p>
       </li>
     {% endfor %}
@@ -46,7 +47,7 @@
 
             // the heading, which is also the actual URL/link
             if (item.title) {
-                newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.title + "</a></h3>");
+                newItem.append("<h3 class='list-group-item-heading h4'><a href='" + item.url + "'>" + item.title + "</a></h3>");
                 newItem.append("<p><small>" + item.url + "</small></p>");
             } else {
                 newItem.append("<h3 class='list-group-item-heading'><a href='" + item.url + "'>" + item.url + "</a></h3>");
@@ -54,7 +55,7 @@
 
             // add content_type
             if (item.content_type) {
-                newItem.append("<p><small>" + item.content_type + "</small></p>");
+                newItem.append("<span class='badge'>" + item.content_type + "</span>");
             }
 
             // add description

@@ -94,10 +94,12 @@ def home_page():
         urls = models.Url.query.filter_by(
             user=flask_login.current_user
         ).all()
+        content_types = set([url.content_type for url in urls if url.content_type])
         return flask.render_template(
             "ur_links.html",
             search_form=search_form,
-            urls=urls
+            urls=urls,
+            options=content_types,
         )
     else:
         return flask.render_template("landing.html")
