@@ -91,9 +91,18 @@ def home_page():
     if flask_login.current_user.is_authenticated:
         # this form doesn't need validating
         search_form = SearchForm(flask.request.form)
-        urls = models.Url.query.filter_by(
-            user=flask_login.current_user
-        ).all()
+
+
+        # if we have at least search term, the user has GET'd search form
+        search_term = flask.request.args.get('term')
+        search_type = flask.request.args.get('type')
+        if search_term:
+            urls = url_search(search_term, search_type=search_type)
+        else:
+            urls = models.Url.query.filter_by(
+                user=flask_login.current_user
+            ).all()
+
         content_types = set([url.content_type for url in urls if url.content_type])
         return flask.render_template(
             "ur_links.html",
@@ -105,23 +114,7 @@ def home_page():
         return flask.render_template("landing.html")
 
 
-@app.route('/autocomplete', methods=['GET'])
-@flask_user.login_required
-def autocomplete():
-    """Provides JSON response of URLs where
-    the search term is in the description.
-
-    Query for URLs owned by the current user, whose descriptions
-    in the database contain `term`.
-
-    Returns:
-        json: A list of dictionaries describing each
-            matching URL.
-
-    """
-
-    search_term = flask.request.args.get('term')
-    search_type = flask.request.args.get('type')
+def url_search(search_term, search_type=None):
 
     if search_type:
         search_results = models.Url.query.filter(
@@ -141,7 +134,28 @@ def autocomplete():
             ),
         )
 
-    urls = [url.to_dict() for url in search_results]
+    return search_results
+
+
+@app.route('/autocomplete', methods=['GET'])
+@flask_user.login_required
+def autocomplete():
+    """Provides JSON response of URLs where
+    the search term is in the description.
+
+    Query for URLs owned by the current user, whose descriptions
+    in the database contain `term`.
+
+    Returns:
+        json: A list of dictionaries describing each
+            matching URL.
+
+    """
+
+    search_term = flask.request.args.get('term')
+    search_type = flask.request.args.get('type')
+    urls = url_search(search_term, search_type=search_type)
+    urls = [url.to_dict() for url in urls]
     return flask.jsonify(urls)
 
 
