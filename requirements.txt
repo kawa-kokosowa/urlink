@@ -1,2 +1,7 @@
+# This is the file Heroku installs. I wish I could
+# call it something like requirements_heroku.txt, but
+# Heroku specifically looks for requirements.txt in
+# root of directory. I may change this upon further
+# investigation.
 -r requirements_no_postgres.txt
 psycopg2

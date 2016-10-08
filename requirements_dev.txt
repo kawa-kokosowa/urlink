@@ -1,0 +1,2 @@
+-r requirements_no_postgres.txt
+py.test

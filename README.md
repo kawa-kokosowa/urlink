@@ -28,9 +28,10 @@ MAIL_PASSWORD="lololol"
 SECRET_KEY="wwowowowowowowoeijfeoaijf"
 ```
 
-Install either `requirements_no_postgres.txt` or `requirements.txt`,
-depending on if you want `psycopg2` (I use sqlite locally, but
-PostgreSQL on Heroku).
+`pip install -r` either `requirements_no_postgres.txt` (or
+`requirements_dev.txt` (if you wanna run tests). `requirements.txt`
+is for Heroku (it includes `psycopg2). I personally use SQLite for
+developing locally and tests.
 
 Create the database with `python app.py db init` (`db migrate`,
 `db upgrade`, and `db --help` are also available).
