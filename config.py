@@ -29,6 +29,6 @@ MAIL_DEFAULT_SENDER = '"urlink" <noreply@urlink.link>'
 MAIL_SERVER = os.getenv('MAIL_SERVER')
 MAIL_PORT = int(os.getenv('MAIL_PORT'))
 MAIL_USE_SSL = True
-MAIL_USE_TLS = False
+MAIL_USE_TLS = True
 # this is used by email:
 USER_APP_NAME = 'urlink'
