@@ -23,6 +23,11 @@ USER_ENABLE_CHANGE_USERNAME = False
 # flask-mail settings for flask-user
 # (email confirmation, password reset)
 # setup for gmail by default
+# NOTE, FIXME, TODO: the only reason this is false
+# is because gmail isn't allowing me use their smtp
+# anymore!
+USER_ENABLE_CONFIRM_EMAIL = False
+# this email stuff is all moot...
 MAIL_USERNAME = os.getenv('MAIL_USERNAME')  # example@gmail.com
 MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 MAIL_DEFAULT_SENDER = '"urlink" <noreply@urlink.link>'
