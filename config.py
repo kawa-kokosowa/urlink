@@ -27,7 +27,9 @@ USER_ENABLE_CHANGE_USERNAME = False
 # is because gmail isn't allowing me use their smtp
 # anymore!
 USER_ENABLE_CONFIRM_EMAIL = False
-# this email stuff is all moot...
+# this email stuff is all moot because of above note
+# will renable once have smtp service
+"""
 MAIL_USERNAME = os.getenv('MAIL_USERNAME')  # example@gmail.com
 MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 MAIL_DEFAULT_SENDER = '"urlink" <noreply@urlink.link>'
@@ -35,5 +37,6 @@ MAIL_SERVER = os.getenv('MAIL_SERVER')
 MAIL_PORT = int(os.getenv('MAIL_PORT'))
 MAIL_USE_SSL = True
 MAIL_USE_TLS = True
+"""
 # this is used by email:
 USER_APP_NAME = 'urlink'
