@@ -94,24 +94,34 @@ def fetch_searchable_data(url):
 
     searchable_data = {}
 
-    # heuristics
+    # Try to get the HTTP header for this resource. This may fail
+    # so as a last-ditch effort try to get a type from the URL's
+    # file extension.
+
     # first try file extension, if can't tell type then determine with head...
     # once you can get first x bytes for <head> info (meta, title, etc).
     try:
+        # note that the new url is the final url we were directed to
         url, head_response = head_until_no_redirect(url)
     except (HttpError, MaxRedirectError) as e:
         # we can at least try to guess the mimetype from file extension
         mimetype = mimetypes.guess_type(url)
         return {"content_type": mimetype[0]} if mimetype else None
 
+    # Determine resource's type from the 'Content-Type' HTTP header.
     headers_from_url = head_response.headers
     content_type = headers_from_url['Content-Type'].split(';', 1)[0]
 
-    # bail if we can't handle the type (because it's not "text/html")
+    # TODO: should be able to handle extrapolating meta
+    # from images, PDFs, music, etc.
+    #
+    # Bail if we can't extrapolate any further information
+    # about this Content-Type (because beyond here we are just
+    # extrapolating HTML information).
     if content_type != "text/html":
         return {"content_type": content_type}
 
-    # we know the content_type is text/html now
+    # ...now we know the content_type is text/html!
     searchable_data['content_type'] = "text/html"
 
     # First try to only request the first 400 bytes to get all of the
@@ -131,6 +141,7 @@ def fetch_searchable_data(url):
         # Get the full page, but skip the part we already have (skip the
         # first 400 bytes), combining this new part with
         # the old_response_text!
+        # FIXME: could be stream of data! Set an upper limit on bytes range!
         new_response = _session.get(url, headers={'Range': 'bytes=401-'})
         soup = bs4.BeautifulSoup(old_response_text + new_response.text, 'html.parser')
 
