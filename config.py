@@ -26,8 +26,8 @@ USER_ENABLE_CHANGE_USERNAME = False
 MAIL_USERNAME = os.getenv('MAIL_USERNAME')  # example@gmail.com
 MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
 MAIL_DEFAULT_SENDER = '"urlink" <noreply@urlink.link>'
-MAIL_SERVER = 'smtp.gmail.com'
-MAIL_PORT = 465
+MAIL_SERVER = os.getenv('MAIL_SERVER')
+MAIL_PORT = int(os.getenv('MAIL_PORT'))
 MAIL_USE_SSL = True
 MAIL_USE_TLS = False
 # this is used by email:
