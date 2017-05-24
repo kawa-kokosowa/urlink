@@ -13,6 +13,7 @@ This is an early work in progress (call it "alpha").
 
 ## The tools
 
+  * Python 3
   * `flask`, `flask_user`, `flask_login`, `flask_sqlalchemy`,
     `flask_migrate`
   * Bootstrap
@@ -20,28 +21,26 @@ This is an early work in progress (call it "alpha").
 
 ## Quickstart
 
-[Set the required environmental variables](http://askubuntu.com/questions/58814/how-do-i-add-environment-variables):
-
 ```
-MAIL_USERNAME="example@gmail.com"
-MAIL_PASSWORD="lololol"
-SECRET_KEY="wwowowowowowowoeijfeoaijf"
+mkvirtualenv urlink -p python3
+pip install -r requirements_no_postgres.txt
+export SECRET_KEY="asfdsfasdfasdffsdsdfa"
+python app.py db init
+python app.py db upgrade
+gunicorn app:app
 ```
-
-`pip install -r` either `requirements_no_postgres.txt` (or
-`requirements_dev.txt` (if you wanna run tests). `requirements.txt`
-is for Heroku (it includes `psycopg2). I personally use SQLite for
-developing locally and tests.
-
-Create the database with `python app.py db init` (`db migrate`,
-`db upgrade`, and `db --help` are also available).
-
-Finally run the server with `gunicorn app:app:`.
-
 ## Environmental Variables
+
+This application is configured through environmental variables.
+
+Required (everything else is optional):
 
   * `SECRET_KEY` (you must override)
   * `SQLALCHEMY_DATABASE_URI` (optional; defaults to sqlite)
+
+You will want to look at `flask-mail`  if you want to provide registration
+email verification, as seen below:
+
   * `MAIL_USERNAME` (you always need to set this!)
   * `MAIL_PASSWORD` (you always need to set this!)
   * `MAIL_DEFAULT_SENDER` (don't set if you're using gmail)
@@ -49,3 +48,4 @@ Finally run the server with `gunicorn app:app:`.
   * `MAIL_PORT` (don't set if you're using gmail)
   * `MAIL_USE_SSL` (don't set if you're using gmail)
   * `MAIL_USE_TLS` (don't set if you're using gmail)
+

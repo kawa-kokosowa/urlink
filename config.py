@@ -13,7 +13,7 @@ TESTING = False
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 SQLALCHEMY_DATABASE_URI = os.getenv(
-    'SQLALCHEMY_DATABASE_URI',
+    'SQLALCHEMY_DATABASE_URI',  # if not this... then below
     os.getenv('DATABASE_URL', 'sqlite:////tmp/debug.db'),  # heroku
 )
 
